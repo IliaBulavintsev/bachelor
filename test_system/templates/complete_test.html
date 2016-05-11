@@ -1,0 +1,44 @@
+{% extends "basic.html" %}
+{% block title %} Complete {% endblock %}
+{% block main %}
+    <div id="clock" class="col-sm-1"></div>
+    <div id="hidden_time">{{time}}</div>
+    <form action="{% url 'complete_test' %}" method="POST" class="submit_test">
+        {% csrf_token %}
+        <input type="hidden" name="complete" value="{{complete}}">
+        {% for select in selects %}
+            <div class="col-sm-offset-2 col-sm-6 form-group test_select">
+                    <h4>Вопрос: {{forloop.counter}}</h4>
+                    <p>{{select.question.question_text}}</p>
+                    {% if select.question.question_type == 'V'%}
+                        {% for answer in select.question.answers.all %}
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox" name={{select.question.pk}} value="{{answer.pk}}">
+                                {{answer.answer_text}}
+                              </label>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if select.question.question_type == 'S' %}
+                        {% for answer in select.question.answers.all %}
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="{{select.question.pk}}" value="{{answer.pk}}">
+                                    {{answer.answer_text}}
+                                </label>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if select.question.question_type == 'I'%}
+                        <input type="text" class="form-control" placeholder="Ответ" name="{{select.question.pk}}">
+                    {% endif %}
+            </div>
+        {% endfor %}
+        <input class="btn btn-success col-sm-offset-7" type="submit" value="Завершить тест">
+    </form>
+{% endblock%}
+{% block scripts %}
+{% load staticfiles %}
+    <script src="{% static 'js/complete.js' %}"></script>
+{% endblock %}

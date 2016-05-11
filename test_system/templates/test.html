@@ -1,0 +1,153 @@
+{% extends "basic.html" %}
+{% block title %} {{test.test_name}} {% endblock %}
+{% block head_form %}
+    {% include "yet_login_head.html" %}
+{% endblock%}
+{% block main %}
+{% load extras_filter %}
+    <h3 class="col-sm-offset-1">
+        <span class="label label-default">
+            Тест: {{test.test_name}}
+        </span>
+        <button type="button" class="btn btn-danger btn-s test_btn_del_test">
+                <span class=" glyphicon glyphicon-trash"></span>
+        </button>
+    </h3>
+    {% if test.test_file %}
+        <form class="form-inline form_rangs col-sm-offset-1">
+          Ранги:
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="two">2</label>
+            <input type="text" class="form-control xs_input" name="two" id="two" placeholder="2" value="{{test.test_2}}">%
+          </div>
+          <div class="form-group">
+            <label for="three">3</label>
+            <input type="text" class="form-control xs_input" name="three" id="three" placeholder="3" value="{{test.test_3}}">%
+          </div>
+          <div class="form-group">
+            <label for="four">4</label>
+            <input type="text" class="form-control xs_input" name="four" id="four" placeholder="4" value="{{test.test_4}}">%
+          </div>
+          <input type="hidden" id="test_rang" name="test" value="{{test.pk}}">
+          <button type="submit" class="btn btn-warning  btn_submit_rangs btn-xs">Изменить</button>
+        </form>
+    {% endif %}
+    <ol class="breadcrumb  col-sm-offset-1 col-sm-11">
+      {% if test.test_file %}
+          <li>Кол-во вопросов:<span class="num_questions">{{questions}}</span></li>
+          <li>Выборка:
+              <input type="text" name="num_select" id="num_select" class="xs_input" value="{{test.test_num_select}}"/>
+              <button type="button" class="btn btn-warning btn-xs btn_num_of_questions">
+                    Изменить
+              </button>
+          </li>
+          <li>Время(сек):
+              <input type="text" name="time" id="time" class="xs_input" value="{{test.test_time}}"/>
+              <button type="button" class="btn btn-warning btn-xs btn_time">
+                    Изменить
+              </button>
+          </li>
+          <li class="status_test">Статус теста:
+              <input type="checkbox" name="status-checkbox" id="status"
+                     {% if test.test_is_active %}
+                     checked
+                     {% endif%}
+              >
+          </li>
+      {% endif %}
+      <li>
+          <button class="btn btn-default btn-xs btn_add_file" type="button">
+              Загрузить файл теста
+              <span class=" glyphicon glyphicon-upload"></span>
+          </button>
+      </li>
+      {% if test.test_file %}
+          <li>
+              <button class="btn btn-default btn-xs" type="button">
+                  <a href="{{test.test_file.url}}">
+                  Выгрузить  файл теста
+                  <span class=" glyphicon glyphicon-download"></span>
+                  </a>
+              </button>
+          </li>
+          <li>
+
+              <button class="btn btn-default btn_del_file btn-xs" type="button">
+                  Удалить файл теста
+                  <span class=" glyphicon glyphicon-trash"></span>
+              </button>
+
+          </li>
+      {% endif %}
+    </ol>
+{% if test.test_file %}
+    {% for group in groups %}
+        <div class="col-sm-offset-1 col-sm-3">
+            <h4><span class="label label-default">Группа: {{ group.group_index }}</span></h4>
+        </div>
+        <div class="col-sm-offset-1 col-sm-10">
+        <table class="table table-hover table-hover">
+            <thead class="thead-default">
+                <tr>
+                    <th class="col-sm-2">Фамилия</th>
+                    <th class="col-sm-2">Имя</th>
+                    <th class="col-sm-1">Оценка</th>
+                    <th class="col-sm-1">Процент</th>
+                    <th class="col-sm-2">Правильно из</th>
+                    <th class="col-sm-2">Дата</th>
+                    <th class="col-sm-2">Ссылка</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for complete in completes %}
+                    {% if complete.student.profile_group.group_index == group.group_index %}
+                        <tr>
+                            <td>{{complete.student.profile_user.last_name}}</td>
+                            <td>{{complete.student.profile_user.first_name}}</td>
+                            <td>{{complete.mark}}</td>
+                            <td>{{complete.rang}}</td>
+                            <td>{{complete.correct_answers}} из {{complete.num_select}}</td>
+                            <td>{{complete.data}}</td>
+                            <td><a class="btn btn-default btn-xs" href="{% url 'watch_complete' complete.pk %}">Посмотреть</a></td>
+                        </tr>
+                    {% endif %}
+                {% endfor%}
+            </tbody>
+        </table>
+        </div>
+    {% endfor %}
+{% endif %}
+<div class="col-sm-offset-1 col-sm-3 form_div test_add_file">
+    <button type="button" class="btn btn-danger  test_add_file_remove_button col-sm-offset-11 btn-xs">
+        <span class="glyphicon glyphicon-remove-circle"></span>
+    </button>
+    <h4>Загрузка теста</h4>
+    <form method="post" class="form_add_file" enctype="multipart/form-data">
+        {% csrf_token %}
+          <div class="form-group">
+            <input type="file" id="test_file" name="test_file">
+          </div>
+        <input type="hidden" id="test" name="test" value="{{test.test_name}}">
+        <button type="submit" class="btn btn-success btn_submit_test_add_file col-sm-offset-4">Загрузить</button>
+    </form>
+</div>
+<div class="col-sm-offset-1 col-sm-3 form_div test_del_file">
+    <h4>Вы уверены что, хотите удалить файл теста {{test.test_name}}?(все вопросы и ответы будут удалены)</h4>
+    <form method="post" class="form_del_file">
+        {% csrf_token %}
+        <input type="hidden" id="test_del" name="test" value="{{test.pk}}">
+        <button type="submit" class="btn btn-danger btn_submit_test_del_file col-sm-offset-2">Удалить</button>
+        <button type="button" class="btn btn-warning  btn_submit_not_del_file col-sm-offset-2">Отмена</button>
+    </form>
+</div>
+<div class="col-sm-offset-1 col-sm-3 form_div test_del">
+    <h4>Вы уверены что, хотите удалить тест {{test.test_name}}?</h4>
+    <form method="post" action="{% url 'del_test' %}" class="form_del_test">
+        {% csrf_token %}
+        <input type="hidden" name="test" value="{{test.pk}}">
+        <button type="submit" class="btn btn-danger btn_submit_test_del col-sm-offset-2">Удалить</button>
+        <button type="button" class="btn btn-warning  btn_submit_not_del_test col-sm-offset-2">Отмена</button>
+    </form>
+</div>
+{% endblock %}

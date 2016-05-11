@@ -1,0 +1,6 @@
+<form method="post" action="{% url 'log_out' %}">
+    {% csrf_token %}
+    <span class="glyphicon glyphicon-user login_span"></span>
+    <span class="login_span">{{request.user.get_full_name}}</span>
+    <button type="submit" class="btn btn-default logout_button_header">Выйти</button>
+</form>

@@ -1,0 +1,132 @@
+.head_sign_up{
+    margin-top: 8px;
+}
+.add_test_ul{
+    padding: 10px;
+}
+.add_test_li{
+    padding: 10px 20px;
+
+    margin-bottom: 10px;
+    list-style-type: none;
+    border: 1px solid #C9C9C9;
+    border-radius: 5px;
+}
+.add_test_add_button{
+    margin-left: -20px;
+}
+.main_img{
+    margin-top: 10px;
+    margin-left: 33%;
+}
+.login_span{
+    top: 50%;
+}
+.logout_button_header{
+    margin-top: 10px;
+}
+.span_info{
+    margin-left: 10px;
+}
+.accordion_subject_h{
+    background-color: #C9C9C9;
+    display: block;
+    border: 1px solid #C9C9C9;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: -85px;
+    position: relative;
+}
+.span_badge{
+    margin-top: 6px;
+}
+.accordion_subject_ul{
+    max-width: 95%;
+    margin-left: 5%;
+    border: 1px solid #C9C9C9;
+    border-top: none;
+    border-radius: 5px;
+    display: none;
+}
+.accordion_subject_div{
+    margin-bottom: -20px;
+}
+.personal_tutor_button_add_subject{
+    height: 30px;
+}
+.btn_my_group{
+    margin-top: 30px;
+}
+.form_div{
+    margin-top: 10px;
+    border: 1px solid #C9C9C9;
+    border-radius: 5px;
+    padding: 10px;
+}
+.form_div_add_subject{
+    display: none;
+}
+.form_div_add_test{
+    background-color: #f2f2f2;
+    display: none;
+}
+
+.form_div_del_subject{
+    background-color: #f2f2f2;
+    display: none;
+}
+.xs-label{
+    position: absolute;
+    right: 50px;
+}
+.form_div_edit_subject{
+    background-color: #f2f2f2;
+    display: none;
+}
+.test_btn_del_test{
+    height: 30px;
+    margin-left: 10px;
+}
+.test_add_file{
+    background-color: #f2f2f2;
+    display: none;
+}
+.test_del_file{
+    background-color: #f2f2f2;
+    display: none;
+}
+.xs_input{
+    max-height: 20px;
+    max-width: 41px;
+}
+.form_rangs{
+    margin-bottom: 5px;
+}
+.test_del{
+    background-color: #f2f2f2;
+    display: none;
+}
+.test_select{
+    margin-top: 10px;
+    border: 1px solid #C9C9C9;
+    border-radius: 5px;
+    padding: 10px;
+}
+.submit_test{
+    margin-bottom: 20px;
+}
+.li_student_test{
+    display: block;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+#hidden_time{
+    display: none;
+}
+#clock{
+    position: fixed;
+    top: 70px;
+    left: 40px;
+    border: 1px solid #C9C9C9;
+    border-radius: 3px;
+}

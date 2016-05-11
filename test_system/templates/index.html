@@ -1,0 +1,33 @@
+{% extends "basic.html" %}
+{% block title %} SignUp! {% endblock %}
+{% block head_form %}
+    <form class="form-inline head_sign_up" method="post" action="{% url 'log_in' %}">
+        {% csrf_token %}
+        {% if error_login == 1%}
+            <div class="form-group has-error">
+                <label class="control-label" for="username">Неправильные данные!</label>
+                <input type="text" class="form-control" name="username" value="" id="username" placeholder="Логин">
+            </div>
+            <div class="form-group has-error">
+                <label class="sr-only" for="password">Password</label>
+                <input type="password" class="form-control" name="password" value="" id="password" placeholder="Пароль">
+            </div>
+        {% endif%}
+        {% if not error_login %}
+              <div class="form-group">
+                <label class="sr-only" for="username">User name</label>
+                <input type="text" class="form-control" name="username" value="" id="username" placeholder="Логин">
+              </div>
+              <div class="form-group">
+                <label class="sr-only" for="password">Password</label>
+                <input type="password" class="form-control" name="password" value="" id="password" placeholder="Пароль">
+              </div>
+        {% endif%}
+        <button type="submit" class="btn btn-default">Войти</button>
+    </form>
+{% endblock%}
+{% block main %}
+    <div>
+        <img src='../static/img/brain.jpg' alt="Brain" class=" main_img img-rounded">
+    </div>
+{% endblock %}

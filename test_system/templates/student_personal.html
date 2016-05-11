@@ -1,0 +1,35 @@
+{% load extras_filter %}
+<div class="col-sm-offset-1">
+    <span class="label label-info">
+        Поток {{user.profile.profile_group.group_from_flow.flow_index}}
+    </span>
+    <span></span>
+    <span class="label label-info span_info">
+        Группа {{user.profile.profile_group.group_index}}
+    </span>
+</div>
+{% for subject in subjects %}
+    <div class="col-sm-6 col-sm-offset-1 accordion_subject_div">
+    <h3 class="accordion_subject_h list-group-item" status="close">
+        {{subject.subject_name}}
+        <span class="badge span_badge">{{subject.tests__count}}</span>
+    </h3>
+    <ul class="accordion_subject_ul">
+        {% for test in subject.tests.all %}
+            {% if test.test_subject == subject %}
+                {% if test.test_name in complete_list %}
+                    <li class="li_student_test">
+                        <div class="li_student_test_complete bg-info">
+                            {{test.test_name}} Оценка: {{complete|mark:test}} , Процент правильных: {{complete|rang:test}}%
+                        </div>
+                    </li>
+                {% elif test.test_is_active %}
+                    <li class="li_student_test">
+                        <a href="{% url 'generate_test' user.pk test.pk %}">{{test.test_name}}</a>
+                    </li>
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+</div>
+{% endfor %}

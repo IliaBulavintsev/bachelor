@@ -1,0 +1,105 @@
+<div class="col-sm-offset-1 col-sm-1">
+    <span class="label label-info">
+        Кол-во предметов {{subjects_count}}
+    </span>
+</div>
+<div class="col-sm-7">
+    <button type="button" class="btn btn-success btn-sm btn_add_subject">
+        <span class="glyphicon glyphicon-plus span_plus"></span>
+    </button>
+</div>
+<div class="col-sm-offset-1 col-sm-4 form_div form_div_add_subject">
+    <form method="post" class="form_add_subject">
+        {% csrf_token %}
+        <div class="form-group form_group_add_subject">
+            <button type="button" class="btn btn-danger  add_subj_remove_button col-sm-offset-11 btn-xs">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </button>
+            <label for="subject">Название Предмета</label>
+            <input type="text" class="form-control" id="subject" name="subject" placeholder="Введите название предмета">
+            <label for="flow">Поток</label>
+            <select class="form-control" id="flow" name="flow">
+                {% for flow in flows %}
+                    <option value="{{flow.flow_index}}">{{flow.flow_index}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success btn_submit_subject col-sm-offset-5">Добавить</button>
+    </form>
+</div>
+{% for subject in subjects %}
+    <div class="col-sm-9 col-sm-offset-1 accordion_subject_div">
+        <div class="col-sm-2 btn_my_group">
+            <button type="button" class="btn btn-danger  btn-xs btn_del_subj">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+            <button type="button" class="btn btn-warning btn-xs btn_edit_subj">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            <button type="button" class="btn btn-success btn-xs btn_add_test">
+                <span class="glyphicon glyphicon-plus span_sm"></span>
+            </button>
+        </div>
+        <h3 class="accordion_subject_h list-group-item col-sm-6" status="close">
+            <span class="subject_name_span">{{subject.subject_name}}</span>
+            <span class="label label-default xs-label">поток: {{subject.subject_flow.flow_index}}</span>
+            <span class="badge span_badge">{{subject.tests__count}}</span>
+        </h3>
+        <ul class="accordion_subject_ul col-sm-5 col-sm-offset-2">
+            {% for test in subject.tests.all %}
+                {% if test.test_subject == subject %}
+                    <li><a href="{% url 'test' test.pk %}">{{test.test_name}}</a></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+{% endfor %}
+<div class="col-sm-offset-1 col-sm-4 form_div form_div_add_test">
+    <form method="post" class="form_add_test">
+        {% csrf_token %}
+        <div class="form-group form_group_add_test">
+            <button type="button" class="btn btn-danger  add_test_remove_button col-sm-offset-11 btn-xs">
+                <span class="glyphicon glyphicon-remove-circle"></span>
+            </button>
+            <label for="test_name">Название теста</label>
+            <input type="text" class="form-control" id="test_name" name="test_name" placeholder="Введите название теста">
+            <label for="test_subject">Предмет</label>
+            <select class="form-control" id="test_subject" name="test_subject">
+                {% for subject in subjects %}
+                    <option value="{{subject.subject_name}}">{{subject.subject_name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success btn_submit_test col-sm-offset-5">Добавить</button>
+    </form>
+</div>
+<div class="col-sm-offset-1 col-sm-3 form_div form_div_del_subject">
+    <h4>Вы действительно желаете удалить предмет <span class="val_del_obj"></span>?</h4>
+    <h5>(все тесты будут удалены автоматически)</h5>
+    <form method="post" class="form_del_subject">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger btn_submit_del_subject col-sm-offset-2">Удалить</button>
+        <button type="button" class="btn btn-warning  submit_not_del_subject col-sm-offset-2">Отмена</button>
+    </form>
+</div>
+
+<div class="col-sm-offset-1 col-sm-3 form_div form_div_edit_subject">
+    <button type="button" class="btn btn-danger  edit_subj_remove_button col-sm-offset-11 btn-xs">
+        <span class="glyphicon glyphicon-remove-circle"></span>
+    </button>
+    <h4>Редактирование предмета <span class="val_edit_obj"></span></h4>
+    <form method="post" class="form_edit_subject">
+        {% csrf_token %}
+        <div class="form-group form_group_add_subject">
+            <label for="edit_subject">Название Предмета</label>
+            <input type="text" class="form-control" id="edit_subject" name="edit_subject" placeholder="Введите название предмета">
+            <label for="edit_flow">Поток</label>
+            <select class="form-control" id="edit_flow" name="edit_flow">
+                {% for flow in flows %}
+                    <option value="{{flow.flow_index}}">{{flow.flow_index}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-success btn_submit_edit_subject col-sm-offset-3">Сохранить изменения</button>
+    </form>
+</div>
