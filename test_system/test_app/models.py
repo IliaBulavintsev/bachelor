@@ -9,10 +9,16 @@ from transliterate import translit, get_available_language_codes
 class Flow(models.Model):
     flow_index = models.IntegerField(unique=True, default=0)
 
+    def __str__(self):
+        return "Поток: " + str(self.flow_index)
+
 
 class Group(models.Model):
     group_index = models.IntegerField(unique=True)
     group_from_flow = models.ForeignKey('Flow', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "Группа: " + str(self.group_index) + " поток: " + str(self.group_from_flow)
 
 
 class Profile(models.Model):
@@ -24,6 +30,9 @@ class Profile(models.Model):
     profile_user = models.OneToOneField(User, related_name='profile')
     profile_group = models.ForeignKey(Group, blank=True, null=True, on_delete=models.CASCADE)
     profile_permissions = models.CharField(max_length=1, choices=WHO_IS_LIST, default='S')
+
+    def __str__(self):
+        return "Права: " + str(self.profile_permissions) + " Фамилия: " + str(self.profile_user.last_name) + " Имя: " + str(self.profile_user.first_name)
 
 
 class Subject(models.Model):

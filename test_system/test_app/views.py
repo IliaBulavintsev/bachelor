@@ -62,6 +62,8 @@ def log_in(request):
 
 def index(request):
     if request.user.is_authenticated():
+        if request.user.is_superuser:
+            return HttpResponseRedirect('admin/')
         if request.user.profile.profile_permissions == 'S':
             return personal_student(request)
         if request.user.profile.profile_permissions == 'T':
