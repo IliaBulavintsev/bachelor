@@ -48,7 +48,7 @@
         <ul class="accordion_subject_ul col-sm-5 col-sm-offset-2">
             {% for test in subject.tests.all %}
                 {% if test.test_subject == subject %}
-                    <li><a href="{% url 'test' test.pk %}">{{test.test_name}}</a></li>
+                    <li class="li_student_test"><a href="{% url 'test' test.pk %}">{{test.test_name}}</a></li>
                 {% endif %}
             {% endfor %}
         </ul>
