@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^complete_test/$', test_app_views.complete_test, name='complete_test'),
     url(r'^times/$', test_app_views.times, name='times'),
     url(r'^watch_complete/(?P<id>[0-9]+)/$', test_app_views.watch_complete, name='watch_complete'),
-
+    url(r'^watch/(?P<id>[0-9]+)/$', test_app_views.watch, name='watch'),
     url(r'^$', test_app_views.index, name='index'),
 
 ]

@@ -33,7 +33,7 @@
           <button type="submit" class="btn btn-warning  btn_submit_rangs btn-xs">Изменить</button>
         </form>
     {% endif %}
-    <ol class="breadcrumb  col-sm-offset-1 col-sm-11">
+    <ol class="breadcrumb col-sm-12">
       {% if test.test_file %}
           <li>Кол-во вопросов:<span class="num_questions">{{questions}}</span></li>
           <li>Выборка:
@@ -78,6 +78,9 @@
                   <span class=" glyphicon glyphicon-trash"></span>
               </button>
 
+          </li>
+            <li>
+                <a class="btn btn-default btn-xs" href="{% url 'watch' test.pk %}">Посмотреть тест <span class=" glyphicon glyphicon-eye-open"></span></a>
           </li>
       {% endif %}
     </ol>

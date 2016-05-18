@@ -57,7 +57,7 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    answer_text = models.CharField(max_length=127)
+    answer_text = models.CharField(max_length=512)
     answer_is_correct = models.BooleanField(blank=True, default=False)
     answer_to_question = models.ForeignKey('Question', on_delete=models.CASCADE, related_name='answers')
 
@@ -132,7 +132,7 @@ class Test(models.Model):
 
 
 class TestComplete(models.Model):
-    test = models.ForeignKey(Test, blank=True, null=True)
+    test = models.ForeignKey(Test, blank=True, null=True, on_delete=models.CASCADE)
     student = models.ForeignKey(Profile, blank=True, null=True)
     rang = models.IntegerField(blank=True, null=True)
     correct_answers = models.IntegerField(blank=True, null=True)

@@ -1,0 +1,43 @@
+{% extends "basic.html" %}
+{% block title %} Watch {% endblock %}
+{% load extras_filter %}
+{% block main %}
+    <a class="btn btn-default btn-xs col-sm-offset-3 col-sm-1" href="{% url 'test' tests.pk %}">Назад</a>
+    {% for question in questions %}
+        <div class="col-sm-offset-3 col-sm-6 form-group test_select">
+                <!--<h4>Вопрос: {{forloop.counter}}</h4>-->
+                <p>{{question.question_text}}</p>
+                {% if question.question_type == 'V'%}
+                    {% for answer in question.answers.all %}
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" name={{select.question.pk}} value="{{answer.pk}}"
+                                {% if answer.answer_is_correct %}
+                                    checked
+                                {% endif %}
+                            >
+                            {{answer.answer_text}}
+                          </label>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if question.question_type == 'S' %}
+                    {% for answer in question.answers.all %}
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="{{question.pk}}" value="{{answer.pk}}"
+                                       {% if answer.answer_is_correct %}
+                                        checked
+                                       {% endif %}
+                                >
+                                {{answer.answer_text}}
+                            </label>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% if question.question_type == 'I'%}
+                    <input type="text" class="form-control" placeholder="Ответ" name="{{question.pk}}" value="{{question.answers.all.answer_text}}">
+                {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}

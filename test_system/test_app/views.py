@@ -296,3 +296,12 @@ def watch_complete(request, id):
         complete = get_object_or_404(TestComplete, pk=id)
         selects = TestSelection.objects.filter(test_complete=complete)
         return render(request, 'watch_complete.html', {'selects': selects, 'complete': complete})
+
+
+def watch(request, id):
+    if request.user.profile.profile_permissions == 'S':
+        raise Http404
+    else:
+        tests = get_object_or_404(Test, pk=id)
+        questions = Question.objects.filter(question_for_test=tests)
+        return render(request, 'watch.html', {'questions': questions, 'tests': tests})
