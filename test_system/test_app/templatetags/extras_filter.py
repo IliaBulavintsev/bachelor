@@ -15,6 +15,12 @@ def rang(mod, arg):
     return new.rang
 
 
+@register.filter(name='correct')
+def correct(mod, arg):
+    new = mod.get(test=arg)
+    return 'правильно ' + str(new.correct_answers) + ' Из ' + str(new.num_select)
+
+
 @register.filter(name='pk_to_str')
 def pk_to_str(mod):
     return str(mod)

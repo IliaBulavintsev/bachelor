@@ -20,7 +20,7 @@
                 {% if test.test_name in complete_list %}
                     <li class="li_student_test">
                         <div class="li_student_test_complete bg-info">
-                            {{test.test_name}} Оценка: {{complete|mark:test}} , Процент правильных: {{complete|rang:test}}%
+                            {{test.test_name}} : оценка: {{complete|mark:test}} , {{complete|correct:test}} , процент правильных: {{complete|rang:test}}%
                         </div>
                     </li>
                 {% elif test.test_is_active %}
